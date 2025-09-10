@@ -129,8 +129,10 @@ function Navbar() {
         </div>
 
         {/* cart */}
-        <div className="cart w-[25px] h-[25px]">
-          <img src="/darkmode-cart.png" alt="cart" />
+        <div className="cart w-[25px] h-[25px] mt-[5px]">
+          <Link href="/add-to-cart" className="addToCart   text-black rounded-[10px] text-[20px] font-bold flex items-center justify-center hover:opacity-80 transition-opacity duration-500">
+          <img src="/darkmode-cart.png" alt="cart"/>
+          </Link>
         </div>
 
         {/* login button */}
