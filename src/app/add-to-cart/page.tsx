@@ -1,25 +1,35 @@
 "use client"
-import CartCard from "@/components/CartCard" // Import the CartCard component
+
+import { useState } from "react"
+import CartCard from "@/components/CartCard"
 import { Footer } from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import { sampleProducts, shippingOptions } from "@/lib/data"
 
 export default function CartPage() {
-  // Sample cart data matching the image
-  const cartItems = [
-    { id: 1, name: "The Gojo Hoodie", price: 39.99, quantity: 2, image: "/black-anime-hoodie-with-gojo-character.jpg" },
-    { id: 2, name: "The Gojo Hoodie", price: 39.99, quantity: 2, image: "/black-anime-hoodie-with-gojo-character.jpg" },
-    { id: 3, name: "The Gojo Hoodie", price: 39.99, quantity: 2, image: "/black-anime-hoodie-with-gojo-character.jpg" },
-    { id: 4, name: "The Gojo Hoodie", price: 39.99, quantity: 2, image: "/black-anime-hoodie-with-gojo-character.jpg" },
-    { id: 5, name: "The Gojo Hoodie", price: 39.99, quantity: 2, image: "/black-anime-hoodie-with-gojo-character.jpg" },
-  ]
+  // Initialize cart items using sampleProducts and add a default quantity
+  const [cartItems, setCartItems] = useState(
+    sampleProducts.map((product) => ({
+      ...product,
+      quantity: 1, // default quantity
+    }))
+  )
 
+  const [selectedShipping, setSelectedShipping] = useState(
+    shippingOptions.find((option) => option.selected)?.price || 0
+  )
+
+  // Update quantity handler
+  const handleQuantityChange = (id: number, newQuantity: number) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    )
+  }
+
+  // Calculate subtotal dynamically
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const shippingOptions = [
-    { name: "free shipping", price: 0, selected: true },
-    { name: "flat rate", price: 10.0, selected: false },
-    { name: "pickup", price: 15.0, selected: false },
-  ]
-  const selectedShipping = shippingOptions.find((option) => option.selected)?.price || 0
   const total = subtotal + selectedShipping
 
   return (
@@ -28,52 +38,58 @@ export default function CartPage() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Cart Items Grid */}
+          {/* Cart Items */}
           <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {cartItems.map((item) => (
-                <CartCard
-                  key={item.id}
-                  productName={item.name}
-                  productImage={item.image}
-                  initialQuantity={item.quantity}
-                  pricePerItem={item.price}
-                  onQuantityChange={(quantity) => {
-                    // Handle quantity change if needed
-                    console.log(`Item ${item.id} quantity changed to ${quantity}`)
-                  }}
-                />
-              ))}
-            </div>
+            <h1 className="text-2xl font-bold mb-6 text-center md:text-left">Your Cart</h1>
+            {cartItems.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {cartItems.map((item) => (
+                  <CartCard
+                    key={item.id}
+                    productName={item.name}
+                    productImage={item.image}
+                    initialQuantity={item.quantity}
+                    pricePerItem={item.price}
+                    onQuantityChange={(quantity) => handleQuantityChange(item.id, quantity)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-gray-400">Your cart is empty.</p>
+            )}
           </div>
 
-          {/* Cart Summary Sidebar */}
-          <div className="lg:w-80">
+          {/* Cart Summary */}
+          <div className="lg:w-80 w-full">
             <div className="bg-[#1C1C1C] rounded-lg p-6 sticky top-8">
-              <h2 className="text-xl font-semibold text-white mb-6">Cart total</h2>
+              <h2 className="text-xl font-semibold mb-6 text-center md:text-left">Cart Total</h2>
 
               {/* Subtotal */}
-              <div className="flex justify-between items-center mb-6">
-                <span className="text-gray-400">subtotal</span>
-                <span className="text-white text-lg font-medium">${subtotal.toFixed(2)}</span>
+              <div className="flex justify-between items-center mb-6 text-sm md:text-base">
+                <span className="text-gray-400">Subtotal</span>
+                <span className="text-white font-medium">${subtotal.toFixed(2)}</span>
               </div>
 
               {/* Shipping Options */}
               <div className="mb-6">
-                <h3 className="text-gray-400 text-sm mb-4">shipping</h3>
+                <h3 className="text-gray-400 text-sm mb-4">Shipping</h3>
                 <div className="space-y-3">
                   {shippingOptions.map((option, index) => (
-                    <label key={index} className="flex items-center justify-between cursor-pointer">
+                    <label
+                      key={index}
+                      className="flex items-center justify-between cursor-pointer text-sm"
+                    >
                       <div className="flex items-center gap-3">
                         <input
                           type="radio"
                           name="shipping"
-                          defaultChecked={option.selected}
+                          checked={selectedShipping === option.price}
+                          onChange={() => setSelectedShipping(option.price)}
                           className="w-4 h-4 text-purple-600 bg-transparent border-gray-400 focus:ring-purple-500"
                         />
-                        <span className="text-white text-sm">{option.name}</span>
+                        <span className="text-white">{option.name}</span>
                       </div>
-                      <span className="text-white text-sm">
+                      <span className="text-white">
                         {option.price === 0 ? "" : `$${option.price.toFixed(2)}`}
                       </span>
                     </label>
@@ -82,18 +98,18 @@ export default function CartPage() {
               </div>
 
               {/* Total */}
-              <div className="flex justify-between items-center mb-8 pt-4 border-t border-gray-600">
+              <div className="flex justify-between items-center mb-8 pt-4 border-t border-gray-600 text-sm md:text-base">
                 <span className="text-gray-400">Total</span>
-                <span className="text-white text-xl font-semibold">${total.toFixed(2)}</span>
+                <span className="text-white text-lg font-semibold">${total.toFixed(2)}</span>
               </div>
 
-              {/* Action Buttons */}
+              {/* Buttons */}
               <div className="space-y-3">
                 <button className="w-full bg-[#ab03e3] hover:bg-[#9002c7] text-white py-3 px-6 rounded-lg font-medium transition-colors">
-                  buy now
+                  Buy Now
                 </button>
-                <button className="w-full bg-[#ab03e3] hover:bg-[#9002c7] text-white py-3 px-6 rounded-lg font-medium transition-colors">
-                  continue shopping
+                <button className="w-full bg-[#292929] hover:bg-[#333333] text-white py-3 px-6 rounded-lg font-medium transition-colors">
+                  Continue Shopping
                 </button>
               </div>
             </div>
