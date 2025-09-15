@@ -186,7 +186,7 @@ function Navbar() {
           {/* Cart */}
           <div className="w-6 h-6">
             <Link href="/add-to-cart">
-              <img src="/darkmode-cart.png" alt="Cart" className="hover:opacity-80 transition-opacity" />
+              <img src='/darkmode-cart.png' alt="Cart" className="hover:opacity-80 transition-opacity" />
             </Link>
           </div>
 
