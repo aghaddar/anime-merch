@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image"; // ✅ Import Next.js Image
 import { Menu, X } from "lucide-react";
 import SearchBar from "./SearchBar";
 
@@ -14,11 +15,13 @@ function Navbar() {
         
         {/* Left: Logo */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="block h-[40px] w-[160px]">
-            <img
+          <Link href="/" className="block h-[40px] w-[160px] relative">
+            <Image
               src="/animeplus-logo.png"
               alt="AnimePlus Logo"
-              className="h-full w-auto hover:opacity-80 transition-opacity duration-500"
+              fill
+              className="object-contain hover:opacity-80 transition-opacity duration-500"
+              priority // ✅ Preloads logo for better LCP
             />
           </Link>
 
@@ -179,14 +182,25 @@ function Navbar() {
           </div>
 
           {/* Notification */}
-          <div className="w-6 h-6">
-            <img src="/darkmode-notification.png" alt="Notifications" />
+          <div className="w-6 h-6 relative">
+            <Image
+              src="/darkmode-notification.png"
+              alt="Notifications"
+              width={24}
+              height={24}
+            />
           </div>
 
           {/* Cart */}
-          <div className="w-6 h-6">
+          <div className="w-6 h-6 relative">
             <Link href="/add-to-cart">
-              <img src='/darkmode-cart.png' alt="Cart" className="hover:opacity-80 transition-opacity" />
+              <Image
+                src="/darkmode-cart.png"
+                alt="Cart"
+                width={24}
+                height={24}
+                className="hover:opacity-80 transition-opacity"
+              />
             </Link>
           </div>
 
