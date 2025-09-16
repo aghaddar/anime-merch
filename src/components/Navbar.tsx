@@ -193,7 +193,7 @@ function Navbar() {
 
           {/* Cart */}
           <div className="w-6 h-6 relative">
-            <Link href="/add-to-cart">
+            <Link href="/cart">
               <Image
                 src="/darkmode-cart.png"
                 alt="Cart"
