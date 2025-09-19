@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import Navbar from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 
-interface Notification {
+type NotificationItem = {
   id: number
   title: string
   message: string
@@ -13,7 +13,7 @@ interface Notification {
   type: "order" | "promotion" | "system" | "product"
 }
 
-const sampleNotifications: Notification[] = [
+const sampleNotifications: NotificationItem[] = [
   {
     id: 1,
     title: "Order Shipped",
@@ -65,7 +65,7 @@ const sampleNotifications: Notification[] = [
 ]
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState<Notification[]>(sampleNotifications)
+  const [notifications, setNotifications] = useState<NotificationItem[]>(sampleNotifications)
   const [filter, setFilter] = useState<"all" | "unread" | "order" | "promotion">("all")
 
   const markAsRead = (id: number) => {

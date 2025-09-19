@@ -4,8 +4,8 @@ import React from 'react';
 
 // Sample data (replace with your actual data fetching)
 const products = [
-  { id: '1', title: 'Anime Figure Collection', imageUrl: '/images/figure1.jpg', price: 49.99 },
-  { id: '2', title: 'Manga Volume Set', imageUrl: '/images/manga1.jpg', price: 29.99 },
+  { id: '1', title: 'Anime Figure Collection', imageUrl: '/figure1.jpg', price: 49.99 },
+  { id: '2', title: 'Manga Volume Set', imageUrl: '/manga1.jpg', price: 29.99 },
   // More products...
 ];
 

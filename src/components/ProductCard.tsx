@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
@@ -9,6 +10,8 @@ interface ProductCardProps {
   imageUrl?: string;
   image?: string;
   price?: number;
+  rating?: number;
+  category?: string;
   className?: string;
   onAddToCart?: (id: number | string) => void;
 }
@@ -20,6 +23,8 @@ export default function ProductCard({
   imageUrl,
   image,
   price = 0,
+  rating = 0,
+  category,
   className = "",
   onAddToCart,
 }: ProductCardProps) {
@@ -33,7 +38,6 @@ export default function ProductCard({
   };
 
   return (
-    // clickable wrapper navigates to product page; keeps inner button interactive
     <div
       role="link"
       tabIndex={0}
@@ -46,12 +50,49 @@ export default function ProductCard({
       }}
       className={`w-full h-full bg-[#1C1C1C] rounded-lg shadow-lg overflow-hidden flex flex-col ${className} cursor-pointer`}
     >
-      {/* fixed image area */}
-      <div className="w-full h-40 md:h-44 lg:h-48 overflow-hidden">
-        <img src={src} alt={label} className="w-full h-full object-cover" />
+      {/* Use next/image for optimized loading */}
+      <div className="relative w-full h-40 md:h-44 lg:h-48 overflow-hidden">
+        <Image
+          src={src}
+          alt={label}
+          fill
+          sizes="(max-width: 768px) 100vw, 280px"
+          className="object-cover"
+          priority={false}
+        />
       </div>
 
       <div className="p-4 flex-1 flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-3">
+          {category ? (
+            <span className="text-xs uppercase bg-[#151515] text-gray-300 px-2 py-1 rounded">
+              {category}
+            </span>
+          ) : (
+            <span />
+          )}
+
+          <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <span
+                  key={i}
+                  className={
+                    i < Math.round(rating)
+                      ? "text-yellow-400"
+                      : "text-gray-700"
+                  }
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <span className="text-gray-400">
+              {rating ? rating.toFixed(1) : "0.0"}
+            </span>
+          </div>
+        </div>
+
         <h3 className="font-semibold text-lg text-white truncate">{label}</h3>
 
         <p className="text-gray-400 text-base sm:text-lg font-bold">
