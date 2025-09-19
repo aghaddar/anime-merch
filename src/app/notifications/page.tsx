@@ -8,7 +8,7 @@ type NotificationItem = {
   id: number
   title: string
   message: string
-  timestamp: string
+  createdAt: string
   isRead: boolean
   type: "order" | "promotion" | "system" | "product"
 }
@@ -18,7 +18,7 @@ const sampleNotifications: NotificationItem[] = [
     id: 1,
     title: "Order Shipped",
     message: "Your order #12345 has been shipped and is on its way!",
-    timestamp: "10 minutes ago",
+    createdAt: "10 minutes ago",
     isRead: false,
     type: "order",
   },
@@ -26,7 +26,7 @@ const sampleNotifications: NotificationItem[] = [
     id: 2,
     title: "Weekend Sale",
     message: "Special discount on all manga this weekend! Get up to 30% off.",
-    timestamp: "2 hours ago",
+    createdAt: "2 hours ago",
     isRead: false,
     type: "promotion",
   },
@@ -34,7 +34,7 @@ const sampleNotifications: NotificationItem[] = [
     id: 3,
     title: "New Collection",
     message: "New Naruto apparel collection is now available in our store.",
-    timestamp: "1 day ago",
+    createdAt: "1 day ago",
     isRead: false,
     type: "product",
   },
@@ -42,7 +42,7 @@ const sampleNotifications: NotificationItem[] = [
     id: 4,
     title: "Order Delivered",
     message: "Your order #12340 has been successfully delivered.",
-    timestamp: "2 days ago",
+    createdAt: "2 days ago",
     isRead: true,
     type: "order",
   },
@@ -50,7 +50,7 @@ const sampleNotifications: NotificationItem[] = [
     id: 5,
     title: "Account Update",
     message: "Your account security settings have been updated.",
-    timestamp: "3 days ago",
+    createdAt: "3 days ago",
     isRead: true,
     type: "system",
   },
@@ -58,7 +58,7 @@ const sampleNotifications: NotificationItem[] = [
     id: 6,
     title: "Flash Sale",
     message: "24-hour flash sale on all Attack on Titan merchandise!",
-    timestamp: "1 week ago",
+    createdAt: "1 week ago",
     isRead: true,
     type: "promotion",
   },
@@ -83,6 +83,14 @@ export default function NotificationsPage() {
   })
 
   const unreadCount = notifications.filter((n) => !n.isRead).length
+
+  // -> Added typed tabs so we don't use `any` when calling setFilter
+  const filterTabs = [
+    { key: "all", label: "All" },
+    { key: "unread", label: "Unread" },
+    { key: "order", label: "Orders" },
+    { key: "promotion", label: "Promotions" },
+  ] as const
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -114,15 +122,10 @@ export default function NotificationsPage() {
 
         {/* Filter Tabs */}
         <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-700 pb-4">
-          {[
-            { key: "all", label: "All" },
-            { key: "unread", label: "Unread" },
-            { key: "order", label: "Orders" },
-            { key: "promotion", label: "Promotions" },
-          ].map(({ key, label }) => (
+          {filterTabs.map(({ key, label }) => (
             <button
               key={key}
-              onClick={() => setFilter(key as any)}
+              onClick={() => setFilter(key)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === key ? "bg-purple-600 text-white" : "bg-gray-800 text-gray-300 hover:bg-gray-700"
               }`}
@@ -185,7 +188,7 @@ export default function NotificationsPage() {
                     </div>
 
                     <div className="flex items-center justify-between mt-3">
-                      <span className="text-xs text-gray-500">{notification.timestamp}</span>
+                      <span className="text-xs text-gray-500">{notification.createdAt}</span>
                       <span
                         className={`text-xs px-2 py-1 rounded-full ${
                           notification.type === "order"
