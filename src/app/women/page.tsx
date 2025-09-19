@@ -1,22 +1,19 @@
-"use client";
+import ProductGrid from '@/components/ProductGrid';
+import React from 'react';
 
-import { Footer } from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import ProductGrid from "@/components/ProductGrid";
-import { sampleProducts } from "@/lib/data";
 
-export default function WomenPage() {
-  const womenProducts = sampleProducts.filter(
-    (product) => product.category === "clothing"
-  );
+// Sample data (replace with your actual data fetching)
+const products = [
+  { id: '1', title: 'Anime Figure Collection', imageUrl: '/images/figure1.jpg', price: 49.99 },
+  { id: '2', title: 'Manga Volume Set', imageUrl: '/images/manga1.jpg', price: 29.99 },
+  // More products...
+];
 
+export default function ProductsPage() {
   return (
-    <div className="mt-10">
-      <Navbar />
-      <main className="px-4 sm:px-6 lg:px-8">
-        <ProductGrid title="Women's Collection" products={womenProducts} />
-      </main>
-      <Footer />
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6">Our Products</h1>
+      <ProductGrid products={products} />
     </div>
   );
 }

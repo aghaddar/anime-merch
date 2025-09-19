@@ -1,94 +1,106 @@
-"use client"
-
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useRef } from "react"
-import ProductCard from "./ProductCard"
+"use client";
+import React, { useRef } from "react";
+import ProductCard from "./ProductCard";
 
 interface Product {
-  id: number
-  name: string
-  price: number
-  image: string
-  rating: number
-  reviews: number
-  category: string
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  rating: number;
+  reviews: number;
+  category: string;
 }
 
 interface ProductListProps {
-  products: Product[]
-  title?: string
+  products: Product[];
+  title?: string;
 }
 
 function ProductList({ products, title = "Featured Products" }: ProductListProps) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: -400,
         behavior: "smooth",
-      })
+      });
     }
-  }
+  };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: 400,
         behavior: "smooth",
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className="w-full py-8">
-      {/* Section Header */}
       <div className="flex items-center justify-between mb-6 px-4">
         <h2 className="text-3xl font-bold text-white">{title}</h2>
 
-        {/* Navigation Buttons */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <button
             onClick={scrollLeft}
-            className="p-2 rounded-full bg-[#302F2F] hover:bg-[#404040] text-white transition-colors duration-200"
             aria-label="Scroll left"
+            title="Scroll left"
+            className="w-10 h-10 flex items-center justify-center bg-[#1F1F1F] rounded-full text-white shadow-sm transition-colors duration-200 hover:bg-[#ab03e3] focus:outline-none focus:ring-2 focus:ring-[#ab03e3]/40"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <span className="text-lg select-none">‹</span>
           </button>
+
           <button
             onClick={scrollRight}
-            className="p-2 rounded-full bg-[#302F2F] hover:bg-[#404040] text-white transition-colors duration-200"
             aria-label="Scroll right"
+            title="Scroll right"
+            className="w-10 h-10 flex items-center justify-center bg-[#1F1F1F] rounded-full text-white shadow-sm transition-colors duration-200 hover:bg-[#ab03e3] focus:outline-none focus:ring-2 focus:ring-[#ab03e3]/40"
           >
-            <ChevronRight className="w-5 h-5" />
+            <span className="text-lg select-none">›</span>
           </button>
         </div>
       </div>
 
-      {/* Scrollable Product Container */}
+      {/* wrapper is relative so we can position other UI if needed */}
       <div className="relative">
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide px-4 pb-4"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
+          className="flex gap-4 overflow-x-auto py-2 px-4 no-scrollbar"
+          aria-label="Featured products"
         >
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <div
+              key={product.id}
+              className="flex-none w-[240px] sm:w-[260px] md:w-[280px] min-w-[240px] md:min-w-[280px] h-[420px]"
+            >
+              <ProductCard
+                id={product.id}
+                title={product.name}
+                imageUrl={product.image}
+                price={Number(product.price) || 0}
+                className="h-full"
+              />
+            </div>
           ))}
         </div>
+
+        {/* removed per-list ScrollProgressBar */}
       </div>
 
-      {/* Custom scrollbar hiding styles */}
       <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
+        :global(.no-scrollbar) {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        :global(.no-scrollbar::-webkit-scrollbar) {
           display: none;
         }
       `}</style>
     </div>
-  )
+  );
 }
 
-export default ProductList
+export default ProductList;

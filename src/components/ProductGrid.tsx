@@ -1,39 +1,32 @@
-// src/components/ProductGrid.tsx
-import ProductCard from "./ProductCard";
+import React from 'react';
+import ProductCard from './ProductCard';
 
-export interface Product {
-  id: number;
-  name: string;
+interface Product {
+  id: string;
+  title: string;
+  imageUrl: string;
   price: number;
-  image: string;
-  rating: number;
-  reviews: number;
-  category: string;
 }
 
 interface ProductGridProps {
-  title: string;
   products: Product[];
 }
 
-export default function ProductGrid({ title, products }: ProductGridProps) {
+const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   return (
-    <section className="px-6 py-12">
-      {/* Section Title */}
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-        {title}
-      </h2>
-
-      {/* If no products, show a message */}
-      {products.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">No products found.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      )}
-    </section>
+    // auto-rows-fr ensures rows distribute height evenly so cards with h-full match heights
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 auto-rows-fr gap-3 sm:gap-4 md:gap-6">
+      {products.map((product) => (
+        <ProductCard
+          key={product.id}
+          id={product.id}
+          title={product.title}
+          imageUrl={product.imageUrl}
+          price={product.price}
+        />
+      ))}
+    </div>
   );
-}
+};
+
+export default ProductGrid;

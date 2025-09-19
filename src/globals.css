@@ -1,0 +1,48 @@
+/* hide scrollbars but keep scroll functionality */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+@keyframes bell-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  }
+  30% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+  70% {
+    transform: rotate(-6deg);
+  }
+  90% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* small subtle translation + rotate for a more natural feel */
+.bell {
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* animate while hovering the wrapper */
+.notification-wrapper:hover .bell {
+  animation: bell-ring 800ms ease-in-out both;
+}
+
+/* optional: repeat while hovered */
+.notification-wrapper:hover .bell.repeat {
+  animation-iteration-count: infinite;
+}

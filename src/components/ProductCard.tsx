@@ -1,88 +1,76 @@
-"use client"
-
-import { Star } from "lucide-react"
-import Image from "next/image"
-
-interface Product {
-  id: number
-  name: string
-  price: number
-  image: string
-  rating: number
-  reviews: number
-  category: string
-}
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
-  product: Product
+  id: number | string;
+  title?: string;
+  name?: string;
+  imageUrl?: string;
+  image?: string;
+  price?: number;
+  className?: string;
+  onAddToCart?: (id: number | string) => void;
 }
 
-function ProductCard({ product }: ProductCardProps) {
-  return (
-    <div
-      className="w-[345px] h-[440px] bg-[#302F2F] rounded-lg shadow-lg overflow-hidden flex flex-col flex-shrink-0 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 cursor-pointer"
-      onClick={() => {
-        window.location.href = `/product/${product.id}`
-      }}
-    >
-      {/* Product Image Section - 60% of total height */}
-      <div className="relative h-[250px] w-[345px] bg-amber-900">
-        <div className="absolute top-4 right-4 pointer-events-none">
-          <Star className="w-6 h-6 fill-[#e6a100] text-[#e6a100]" />
-        </div>
+export default function ProductCard({
+  id,
+  title,
+  name,
+  imageUrl,
+  image,
+  price = 0,
+  className = "",
+  onAddToCart,
+}: ProductCardProps) {
+  const router = useRouter();
+  const label = title ?? name ?? "Product";
+  const src = imageUrl ?? image ?? "/placeholder.png";
+  const formattedPrice = typeof price === "number" ? price.toFixed(2) : "0.00";
 
-        <div className="flex h-full w-full justify-center items-center">
-          <Image
-            src={product.image || "/placeholder.svg"}
-            alt={`${product.name} - ${product.category}`}
-            fill
-            className="object-cover pointer-events-none"
-          />
-        </div>
+  const handleNavigate = () => {
+    router.push(`/product/${id}`);
+  };
+
+  return (
+    // clickable wrapper navigates to product page; keeps inner button interactive
+    <div
+      role="link"
+      tabIndex={0}
+      onClick={handleNavigate}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleNavigate();
+        }
+      }}
+      className={`w-full h-full bg-[#1C1C1C] rounded-lg shadow-lg overflow-hidden flex flex-col ${className} cursor-pointer`}
+    >
+      {/* fixed image area */}
+      <div className="w-full h-40 md:h-44 lg:h-48 overflow-hidden">
+        <img src={src} alt={label} className="w-full h-full object-cover" />
       </div>
 
-      {/* Product Info Section - 40% of total height */}
-      <div className="bg-[#302f2f] text-white p-4 h-[190px] w-[345px] flex flex-col justify-between">
-        <div className="pointer-events-none">
-          <h2 className="text-xl font-bold mb-2">{product.name}</h2>
+      <div className="p-4 flex-1 flex flex-col gap-3">
+        <h3 className="font-semibold text-lg text-white truncate">{label}</h3>
 
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-2">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-3 h-3 ${i < product.rating ? "fill-[#e6a100] text-[#e6a100]" : "fill-gray-600 text-gray-600"}`}
-                />
-              ))}
-            </div>
-            <span className="text-[#a4a1a1] text-xs">({product.reviews} reviews)</span>
-          </div>
+        <p className="text-gray-400 text-base sm:text-lg font-bold">
+          ${formattedPrice}
+        </p>
 
-          {/* Category Tag */}
-          <div className="mb-1 h-7">
-            <span className="inline-block px-2 py-1 text-xs border border-[#a4a1a1] text-[#a4a1a1] rounded">
-              {product.category}
-            </span>
-          </div>
-
-          <div className="text-2xl font-bold mb-3">${product.price}</div>
+        <div className="mt-auto">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onAddToCart?.(id);
+            }}
+            className="bg-[#ab03e3] hover:bg-[#9002c7] text-white py-3 rounded-md font-bold w-full text-center"
+          >
+            Add to cart
+          </button>
         </div>
-
-        {/* Add to Cart Button */}
-        <button
-          className="w-full h-10 bg-[#ab03e3] hover:bg-[#9602cc] text-white font-semibold rounded-lg transition-colors duration-200 text-sm flex items-center justify-center pointer-events-auto"
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            // Add to cart logic here
-          }}
-        >
-          Add To Cart
-        </button>
       </div>
     </div>
-  )
+  );
 }
-
-export default ProductCard
