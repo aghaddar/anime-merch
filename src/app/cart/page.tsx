@@ -61,7 +61,7 @@ export default function CartPage() {
 
           {/* Cart Summary */}
           <div className="lg:w-80 w-full">
-            <div className="bg-[#1C1C1C] rounded-lg p-6 sticky top-8">
+            <div className="bg-[#1C1C1C] rounded-lg p-6 sticky top-22">
               <h2 className="text-xl font-semibold mb-6 text-center md:text-left">Cart Total</h2>
 
               {/* Subtotal */}

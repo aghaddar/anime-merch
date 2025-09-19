@@ -94,6 +94,28 @@ export default function Home() {
         </div>
       </motion.div>
 
+      {/* ====== BACKGROUND VIDEO ====== */}
+      <div className="relative w-full h-screen overflow-hidden mt-20">
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          src="/websitevid.mp4" // Place your video in public/videos
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+
+        {/* Optional Overlay for better contrast */}
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
+
+        {/* Text/Content over the video */}
+        <div className="relative z-20 flex flex-col items-center justify-center h-full text-white">
+          <h2 className="text-4xl md:text-5xl font-bold">Discover Our Collection</h2>
+          <p className="mt-4 text-lg">Unique pieces to elevate your style and home</p>
+        </div>
+      </div>
+
+
       {/* ====== PRODUCT LISTS ====== */}
       <main>
         <ProductList products={sampleProducts} title="Featured Products" />

@@ -20,7 +20,7 @@ interface ProductCardProps {
 function ProductCard({ product }: ProductCardProps) {
   return (
     <div
-      className="w-[345px] h-[440px] mx-auto bg-[#302F2F] rounded-lg shadow-lg overflow-hidden flex flex-col flex-shrink-0 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 cursor-pointer"
+      className="w-[345px] h-[440px] bg-[#302F2F] rounded-lg shadow-lg overflow-hidden flex flex-col flex-shrink-0 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 cursor-pointer"
       onClick={() => {
         window.location.href = `/product/${product.id}`
       }}

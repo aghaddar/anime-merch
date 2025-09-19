@@ -1,17 +1,35 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image"; // ✅ Import Next.js Image
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import SearchBar from "./SearchBar";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  // Ref to store timeout ID for closing notification dropdown
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Show notification instantly
+  const handleNotificationEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    setIsNotificationOpen(true);
+  };
+
+  // Delay closing notification by 200ms
+  const handleNotificationLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsNotificationOpen(false);
+    }, 200);
+  };
 
   return (
-    <nav className="navbar fixed top-0 left-0 w-full z-50 bg-[#1c1c1c] text-white shadow-lg">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 flex items-center justify-between h-[80px] relative">
+    <nav className="navbar fixed top-0 left-0 w-full h-[65px] z-50 bg-[#0F0F0F] text-white shadow-lg">
+      <div className="max-w-full mx-auto px-4 lg:px-8 flex items-center justify-between h-[65px] relative">
         
         {/* Left: Logo */}
         <div className="flex items-center gap-6">
@@ -21,184 +39,90 @@ function Navbar() {
               alt="AnimePlus Logo"
               fill
               className="object-contain hover:opacity-80 transition-opacity duration-500"
-              priority // ✅ Preloads logo for better LCP
+              priority
             />
           </Link>
-
-          {/* Desktop Categories */}
-          <div className="hidden lg:flex items-center justify-center relative">
-            <div className="group cursor-pointer relative">
-              <div className="flex items-center gap-2">
-                <span className="text-white text-[18px] font-light tracking-wide">
-                  Genre
-                </span>
-                <svg
-                  className="w-5 h-5 text-white transition-transform duration-300 ease-in-out group-hover:rotate-180"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-
-              {/* Dropdown Menu */}
-              <div className="absolute top-full left-0 mt-2 w-[800px] bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
-                <div className="grid grid-cols-3 gap-8 p-6">
-                  {/* Apparel */}
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4 text-white border-b border-gray-600 pb-2">
-                      Apparel
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-md font-medium text-gray-300 mb-2">
-                          Men | Women | Kids
-                        </h4>
-                        <ul className="text-sm text-gray-300 space-y-1 ml-2">
-                          {["Hoodies", "T-Shirts", "Socks", "Pants", "Tanks", "Jackets"].map(
-                            (item) => (
-                              <li
-                                key={item}
-                                className="hover:text-white cursor-pointer"
-                              >
-                                {item}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-
-                      <div className="mt-3">
-                        <p className="text-sm text-gray-400 font-medium">
-                          Accessories:
-                        </p>
-                        <ul className="text-sm text-gray-300 space-y-1 ml-2">
-                          {["Hats", "Necklace", "Rings", "Key chains", "Earrings"].map(
-                            (item) => (
-                              <li
-                                key={item}
-                                className="hover:text-white cursor-pointer"
-                              >
-                                {item}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Manga */}
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4 text-white border-b border-gray-600 pb-2">
-                      Manga
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm text-gray-400 font-medium mb-2">
-                          Format:
-                        </p>
-                        <ul className="text-sm text-gray-300 space-y-1 ml-2">
-                          {["Hard copy", "Soft copy"].map((item) => (
-                            <li
-                              key={item}
-                              className="hover:text-white cursor-pointer"
-                            >
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400 font-medium mb-2">
-                          Genres:
-                        </p>
-                        <ul className="text-sm text-gray-300 space-y-1 ml-2">
-                          {[
-                            "Action",
-                            "Adventure",
-                            "Comedy",
-                            "Drama",
-                            "Fantasy",
-                            "Horror",
-                            "Romance",
-                            "Sci-Fi",
-                            "Slice of Life",
-                          ].map((item) => (
-                            <li
-                              key={item}
-                              className="hover:text-white cursor-pointer"
-                            >
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Decoration */}
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4 text-white border-b border-gray-600 pb-2">
-                      Decoration
-                    </h3>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      {[
-                        "Paintings",
-                        "Katana",
-                        "Sculptures",
-                        "Figurines",
-                        "Vases",
-                        "Tapestries",
-                        "Wall hangings",
-                        "Decorative clocks",
-                        "Unique lamps",
-                        "Collectible items",
-                      ].map((item) => (
-                        <li
-                          key={item}
-                          className="hover:text-white cursor-pointer"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Right side */}
         <div className="flex items-center gap-4">
-          {/* SearchBar (hidden on very small screens) */}
+          {/* SearchBar */}
           <div className="hidden sm:block">
             <SearchBar />
           </div>
 
-          {/* Notification */}
-          <div className="w-6 h-6 relative">
-            <Image
-              src="/darkmode-notification.png"
-              alt="Notifications"
-              width={24}
-              height={24}
-            />
+          {/* Notification with Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={handleNotificationEnter}
+            onMouseLeave={handleNotificationLeave}
+          >
+            {/* Notification Icon */}
+            <div className="w-8 h-8 relative cursor-pointer">
+              <Image
+                src="/darkmode-notification.png"
+                alt="Notifications"
+                width={40}
+                height={40}
+              />
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                3
+              </span>
+            </div>
+
+            {/* Notification Dropdown */}
+            {isNotificationOpen && (
+              <div
+                className="absolute right-0 mt-2 w-80 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-xl z-50"
+                onMouseEnter={handleNotificationEnter}
+                onMouseLeave={handleNotificationLeave}
+              >
+                <div className="p-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-semibold">Notifications</h3>
+                    <button className="text-sm text-blue-400 hover:text-blue-300">
+                      Mark all as read
+                    </button>
+                  </div>
+
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    <div className="p-3 bg-[#3a3a3a] rounded-lg hover:bg-[#4a4a4a] cursor-pointer">
+                      <p className="text-sm">Your order #12345 has been shipped!</p>
+                      <p className="text-xs text-gray-400 mt-1">10 minutes ago</p>
+                    </div>
+
+                    <div className="p-3 bg-[#3a3a3a] rounded-lg hover:bg-[#4a4a4a] cursor-pointer">
+                      <p className="text-sm">Special discount on all manga this weekend!</p>
+                      <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
+                    </div>
+
+                    <div className="p-3 bg-[#3a3a3a] rounded-lg hover:bg-[#4a4a4a] cursor-pointer">
+                      <p className="text-sm">New Naruto apparel collection is now available</p>
+                      <p className="text-xs text-gray-400 mt-1">1 day ago</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-gray-700">
+                    <Link
+                      href="/notifications"
+                      className="block text-center text-blue-400 hover:text-blue-300 text-sm"
+                    >
+                      View all notifications
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Cart */}
-          <div className="w-6 h-6 relative">
+          <div className="w-8 h-8 relative">
             <Link href="/cart">
               <Image
                 src="/darkmode-cart.png"
                 alt="Cart"
-                width={24}
-                height={24}
+                width={40}
+                height={40}
                 className="hover:opacity-80 transition-opacity"
               />
             </Link>
@@ -220,35 +144,6 @@ function Navbar() {
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
-        </div>
-      </div>
-
-      {/* Mobile Dropdown */}
-      <div
-        className={`lg:hidden fixed top-[80px] left-0 w-full bg-[#2a2a2a] border-t border-gray-700 transition-all duration-300 ease-in-out overflow-hidden ${
-          isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="p-4 space-y-4">
-          <SearchBar />
-
-          <div className="space-y-2">
-            <h4 className="text-white text-lg font-semibold">Categories</h4>
-            <ul className="text-gray-300 space-y-1">
-              {["Apparel", "Manga", "Decoration"].map((item) => (
-                <li key={item} className="hover:text-white cursor-pointer">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <Link
-            href="/login"
-            className="block text-center bg-white text-black rounded-[8px] py-2 font-semibold hover:opacity-80 transition-opacity duration-300"
-          >
-            Login
-          </Link>
         </div>
       </div>
     </nav>
