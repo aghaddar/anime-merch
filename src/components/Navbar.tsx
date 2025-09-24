@@ -70,7 +70,7 @@ function Navbar() {
             {/* Notification Dropdown */}
             {isNotificationOpen && (
               <div
-                className="absolute right-0 mt-2 w-80 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-xl z-50"
+                className="absolute right-0 mt-2 w-80 bg-surface border border-neutral-700 rounded-lg shadow-xl z-50"
                 onMouseEnter={handleNotificationEnter}
                 onMouseLeave={handleNotificationLeave}
               >
@@ -83,17 +83,17 @@ function Navbar() {
                   </div>
 
                   <div className="space-y-3 max-h-96 overflow-y-auto">
-                    <div className="p-3 bg-[#3a3a3a] rounded-lg hover:bg-[#4a4a4a] cursor-pointer">
+                    <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
                       <p className="text-sm">Your order #12345 has been shipped!</p>
                       <p className="text-xs text-gray-400 mt-1">10 minutes ago</p>
                     </div>
 
-                    <div className="p-3 bg-[#3a3a3a] rounded-lg hover:bg-[#4a4a4a] cursor-pointer">
+                    <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
                       <p className="text-sm">Special discount on all manga this weekend!</p>
                       <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
                     </div>
 
-                    <div className="p-3 bg-[#3a3a3a] rounded-lg hover:bg-[#4a4a4a] cursor-pointer">
+                    <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
                       <p className="text-sm">New Naruto apparel collection is now available</p>
                       <p className="text-xs text-gray-400 mt-1">1 day ago</p>
                     </div>

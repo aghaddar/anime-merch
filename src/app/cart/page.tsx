@@ -112,7 +112,7 @@ export default function CartPage() {
                 <a href={`/payment?cart=true&total=${total.toFixed(2)}`} className="w-full inline-block bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white py-3 px-6 rounded-lg font-medium transition-colors text-center">
                   Buy Now
                 </a>
-                <button className="w-full bg-[#292929] hover:bg-[#333333] text-white py-3 px-6 rounded-lg font-medium transition-colors">
+                <button className="w-full bg-surface hover:bg-surface/90 text-white py-3 px-6 rounded-lg font-medium transition-colors">
                   Continue Shopping
                 </button>
               </div>

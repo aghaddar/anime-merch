@@ -36,7 +36,7 @@ function LoginPage() {
               type="email"
               id="email"
               placeholder="Enter your email"
-              className="mt-1 block w-full rounded-[10PX] border border-[#3A3A3A] bg-[#2A2A2A] px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500"
+              className="mt-1 block w-full rounded-[10PX] border border-neutral-700 bg-surface px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500"
             />
           </div>
 
@@ -49,7 +49,7 @@ function LoginPage() {
               type="password"
               id="password"
               placeholder="Enter your password"
-              className="mt-1 block w-full rounded-[10PX] border border-[#3A3A3A] bg-[#2A2A2A] px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500"
+              className="mt-1 block w-full rounded-[10PX] border border-neutral-700 bg-surface px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500"
             />
           </div>
 
@@ -83,8 +83,8 @@ function LoginPage() {
 
         {/* Divider */}
         <div className="relative my-6">
-          <hr className="border-[#B3B3B3]" />
-          <span className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#2A2A2A] px-2 text-sm text-[#B3B3B3] rounded">
+          <hr className="border-neutral-600" />
+          <span className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-surface px-2 text-sm text-[#B3B3B3] rounded">
             continue with
           </span>
         </div>

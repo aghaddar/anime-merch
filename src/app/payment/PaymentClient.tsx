@@ -57,33 +57,33 @@ export default function PaymentClient() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm text-gray-300 mb-1">Name</label>
-                <input value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded bg-[#0a0a0a] border border-neutral-700" placeholder="Full name" />
+                <input value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded bg-surface border border-neutral-700" placeholder="Full name" />
               </div>
 
               <div>
                 <label className="block text-sm text-gray-300 mb-1">Email</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 rounded bg-[#0a0a0a] border border-neutral-700" placeholder="you@example.com" />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 rounded bg-surface border border-neutral-700" placeholder="you@example.com" />
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div className="col-span-2">
                   <label className="block text-sm text-gray-300 mb-1">Card number</label>
-                  <input value={card} onChange={(e) => setCard(e.target.value)} className="w-full px-3 py-2 rounded bg-[#0a0a0a] border border-neutral-700" placeholder="4242 4242 4242 4242" />
+                  <input value={card} onChange={(e) => setCard(e.target.value)} className="w-full px-3 py-2 rounded bg-surface border border-neutral-700" placeholder="4242 4242 4242 4242" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-300 mb-1">CVC</label>
-                  <input value={cvc} onChange={(e) => setCvc(e.target.value)} className="w-full px-3 py-2 rounded bg-[#0a0a0a] border border-neutral-700" placeholder="123" />
+                  <input value={cvc} onChange={(e) => setCvc(e.target.value)} className="w-full px-3 py-2 rounded bg-surface border border-neutral-700" placeholder="123" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm text-gray-300 mb-1">Expiry</label>
-                  <input value={expiry} onChange={(e) => setExpiry(e.target.value)} className="w-full px-3 py-2 rounded bg-[#0a0a0a] border border-neutral-700" placeholder="MM/YY" />
+                  <input value={expiry} onChange={(e) => setExpiry(e.target.value)} className="w-full px-3 py-2 rounded bg-surface border border-neutral-700" placeholder="MM/YY" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-300 mb-1">ZIP</label>
-                  <input className="w-full px-3 py-2 rounded bg-[#0a0a0a] border border-neutral-700" placeholder="Postal code" />
+                  <input className="w-full px-3 py-2 rounded bg-surface border border-neutral-700" placeholder="Postal code" />
                 </div>
               </div>
 
@@ -91,7 +91,7 @@ export default function PaymentClient() {
                 <button type="submit" disabled={processing} className="flex-1 bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white py-3 rounded">
                   {processing ? "Processing..." : `Pay $${amount.toFixed(2)}`}
                 </button>
-                <Link href="/" className="flex-1 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white py-3 rounded text-center">Cancel</Link>
+                <Link href="/" className="flex-1 bg-surface hover:bg-surface/90 text-white py-3 rounded text-center">Cancel</Link>
               </div>
             </form>
           ) : (

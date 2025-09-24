@@ -96,7 +96,7 @@ export default function ProductCard({
         <div className="p-4 flex-1 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3">
             {category ? (
-              <span className="text-xs uppercase bg-[#151515] text-gray-300 px-2 py-1 rounded">{category}</span>
+              <span className="text-xs uppercase bg-surface/80 text-gray-300 px-2 py-1 rounded">{category}</span>
             ) : (
               <span />
             )}

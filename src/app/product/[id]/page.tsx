@@ -152,7 +152,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <a href={`/payment?productId=${product.id}`} className="flex-1 bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md text-center">
                   Buy now
                 </a>
-                <button className="flex-1 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white font-semibold py-3 px-6 rounded-lg transition-colors border border-neutral-800">
+                <button className="flex-1 bg-surface hover:bg-surface/90 text-white font-semibold py-3 px-6 rounded-lg transition-colors border border-neutral-800">
                   Add To Cart
                 </button>
               </div>
@@ -162,7 +162,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               <h3 className="text-lg font-semibold mb-4 text-[var(--primary-purple)]">Reviews</h3>
 
               {/* Reviews list - show ~2 items, make rest scrollable */}
-              <div className="space-y-4 mb-4 max-h-44 overflow-y-auto pr-2 modern-scrollbar">
+                <div className="space-y-4 mb-4 max-h-44 overflow-y-auto pr-2 modern-scrollbar">
                 {reviews.map((review) => (
                   <div key={review.id} className="flex gap-3">
                     <div className="w-10 h-10 bg-[var(--primary-purple)]/20 rounded-full flex items-center justify-center text-sm font-bold text-[var(--primary-purple)]">
@@ -191,7 +191,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     placeholder="Your name (optional)"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="flex-1 bg-[#0a0a0a] border border-neutral-700 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/30"
+                    className="flex-1 bg-surface border border-neutral-700 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/30"
                   />
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((n) => (
@@ -213,7 +213,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     placeholder="Write your review"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="w-full bg-[#0a0a0a] border border-neutral-700 px-3 py-2 rounded min-h-[80px] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/30"
+                    className="w-full bg-surface border border-neutral-700 px-3 py-2 rounded min-h-[80px] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/30"
                   />
                 </div>
 
@@ -228,7 +228,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       setRatingValue(5);
                       setComment("");
                     }}
-                    className="bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white px-4 py-2 rounded"
+                    className="bg-surface hover:bg-surface/90 text-white px-4 py-2 rounded"
                   >
                     Clear
                   </button>

@@ -48,7 +48,7 @@ function ProductList({ products, title = "Featured Products" }: ProductListProps
             onClick={scrollLeft}
             aria-label="Scroll left"
             title="Scroll left"
-            className="w-10 h-10 flex items-center justify-center bg-[#1F1F1F] rounded-full text-white shadow-sm transition-colors duration-200 hover:bg-[var(--primary-purple)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/40"
+            className="w-10 h-10 flex items-center justify-center bg-surface rounded-full text-white shadow-sm transition-colors duration-200 hover:bg-[var(--primary-purple)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/40"
           >
             <span className="text-lg select-none">‹</span>
           </button>
@@ -57,7 +57,7 @@ function ProductList({ products, title = "Featured Products" }: ProductListProps
             onClick={scrollRight}
             aria-label="Scroll right"
             title="Scroll right"
-            className="w-10 h-10 flex items-center justify-center bg-[#1F1F1F] rounded-full text-white shadow-sm transition-colors duration-200 hover:bg-[var(--primary-purple)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/40"
+            className="w-10 h-10 flex items-center justify-center bg-surface rounded-full text-white shadow-sm transition-colors duration-200 hover:bg-[var(--primary-purple)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/40"
           >
             <span className="text-lg select-none">›</span>
           </button>
