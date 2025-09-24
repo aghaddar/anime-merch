@@ -29,7 +29,7 @@ export default function Home() {
         style={{ opacity: logoOpacity, scale: logoScale }}
         className="h-screen flex items-center justify-center text-white fixed top-0 left-0 w-full z-50 pointer-events-none"
       >
-  <h1 className="text-6xl md:text-7xl font-bold tracking-wide font-bungee">ANIMEPLUS</h1>
+  <h1 className="text-[12vw] md:text-7xl font-bold tracking-tight font-bungee max-w-full leading-tight text-center">ANIMEPLUS</h1>
       </motion.div>
 
       {/* Push content below full-screen intro */}
