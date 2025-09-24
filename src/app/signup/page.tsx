@@ -6,8 +6,8 @@ function LoginPage() {
   const router = useRouter();
 
   return (
-    <div className="main-page min-h-screen flex items-center justify-center bg-[#0F0F0F]">
-      <div className="login-container w-full max-w-md p-6 bg-[#1A1A1A] rounded-xl shadow-lg">
+    <div className="main-page min-h-screen flex items-center justify-center bg-[var(--background)]">
+      <div className="login-container w-full max-w-md p-6 bg-surface rounded-xl shadow-lg">
 
         <div className="mb-4">
           <button

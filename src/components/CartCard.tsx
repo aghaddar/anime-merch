@@ -33,7 +33,7 @@ export default function CartCard({
 
   return (
     <div
-      className={`w-full bg-[#1C1C1C] rounded-lg shadow-lg overflow-hidden flex flex-col ${className}`}
+  className={`w-full bg-surface rounded-lg shadow-lg overflow-hidden flex flex-col ${className}`}
     >
       {/* Product Image */}
       <div className="relative w-full h-48 bg-gray-800">

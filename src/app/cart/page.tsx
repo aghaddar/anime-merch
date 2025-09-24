@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import CartCard from "@/components/CartCard"
-import { Footer } from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { sampleProducts, shippingOptions } from "@/lib/data"
 import { AnimatedNumber } from "@/components/AnimatedNumber"
@@ -34,7 +33,7 @@ export default function CartPage() {
   const total = subtotal + selectedShipping
 
   return (
-    <div className="min-h-screen bg-[#0F0F0F] text-white">
+  <div className="min-h-screen bg-[var(--background)] text-white">
       <Navbar />
 
       <div className="container mx-auto px-4 py-8">
@@ -62,7 +61,7 @@ export default function CartPage() {
 
           {/* Cart Summary */}
           <div className="lg:w-80 w-full">
-            <div className="bg-[#1C1C1C] rounded-lg p-6 sticky top-22">
+            <div className="bg-surface rounded-lg p-6 sticky top-22">
               <h2 className="text-xl font-semibold mb-6 text-center md:text-left">Cart Total</h2>
 
               {/* Subtotal */}
@@ -110,9 +109,9 @@ export default function CartPage() {
 
               {/* Buttons */}
               <div className="space-y-3">
-                <button className="w-full bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white py-3 px-6 rounded-lg font-medium transition-colors">
+                <a href={`/payment?cart=true&total=${total.toFixed(2)}`} className="w-full inline-block bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white py-3 px-6 rounded-lg font-medium transition-colors text-center">
                   Buy Now
-                </button>
+                </a>
                 <button className="w-full bg-[#292929] hover:bg-[#333333] text-white py-3 px-6 rounded-lg font-medium transition-colors">
                   Continue Shopping
                 </button>
@@ -122,7 +121,7 @@ export default function CartPage() {
         </div>
       </div>
 
-      <Footer />
+  {/* Footer is rendered in the RootLayout */}
     </div>
   )
 }

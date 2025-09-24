@@ -11,6 +11,7 @@
   --primary-purple: #ab03e3;
   --primary-purple-dark: #9002c7;
   --facebook-blue: #1877f2; /* kept if you want brand blue later */
+  --surface: #1a1a1a; /* elevated panels/cards on dark theme */
 }
 
 @theme inline {
@@ -31,6 +32,35 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* utility for consistent elevated surfaces */
+.bg-surface {
+  background: var(--surface);
+}
+
+/* Modern custom scrollbar used across the site */
+.modern-scrollbar {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-purple) transparent;
+}
+.modern-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.modern-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modern-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary-purple);
+  border-radius: 9999px;
+  border: 2px solid transparent; /* creates padding around thumb */
+  background-clip: padding-box;
+  opacity: 0.95;
+}
+.modern-scrollbar::-webkit-scrollbar-thumb:hover {
+  opacity: 1;
 }
 
 /* consistent primary button used across the app */

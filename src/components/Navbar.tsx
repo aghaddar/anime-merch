@@ -31,7 +31,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar fixed top-0 left-0 w-full h-[65px] z-50 bg-[#0F0F0F] text-white shadow-lg">
+  <nav className="navbar fixed top-0 left-0 w-full h-[65px] z-50 bg-[var(--background)] text-white shadow-lg">
       <div className="max-w-full mx-auto px-4 lg:px-8 flex items-center justify-between h-[65px] relative">
         
         {/* Left: Logo */}

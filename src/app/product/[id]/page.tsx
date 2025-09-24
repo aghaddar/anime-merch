@@ -6,7 +6,6 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState, use } from "react"
 import { sampleProducts } from "@/lib/data"
 import Navbar from "@/components/Navbar"
-import { Footer } from "@/components/Footer"
 
 interface ProductPageProps {
   params: Promise<{
@@ -52,14 +51,38 @@ export default function ProductPage({ params }: ProductPageProps) {
     setCurrentImageIndex(index)
   }
 
+  // Reviews state (client-side only for now)
+  const [reviews, setReviews] = useState(sampleReviews)
+  const [name, setName] = useState("")
+  const [ratingValue, setRatingValue] = useState(5)
+  const [comment, setComment] = useState("")
+
+  const handleSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault()
+    const trimmed = comment.trim()
+    if (!trimmed) return
+
+    const newReview = {
+      id: Date.now(),
+      user: name ? name : "Anonymous",
+      rating: ratingValue,
+      comment: trimmed,
+    }
+
+    setReviews((prev) => [newReview, ...prev])
+    setName("")
+    setRatingValue(5)
+    setComment("")
+  }
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+  <div className="min-h-screen bg-[var(--background)] text-white">
       <Navbar />
 
       <div className="container mx-auto px-4 py-8 pt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <div className="relative bg-gray-700 rounded-lg overflow-hidden aspect-square">
+            <div className="relative bg-surface rounded-xl overflow-hidden aspect-square shadow-lg ring-1 ring-black/40">
               <button
                 onClick={prevImage}
                 className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
@@ -86,7 +109,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                   key={index}
                   onClick={() => selectImage(index)}
                   className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 hover:scale-105 ${
-                    index === currentImageIndex ? "border-purple-500" : "border-gray-600 hover:border-gray-400"
+                    index === currentImageIndex ? "border-[var(--primary-purple)] shadow-md" : "border-gray-600 hover:border-gray-400"
                   }`}
                 >
                   <Image
@@ -102,7 +125,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div className="space-y-6">
-            <div>
+            <div className="bg-surface p-6 rounded-xl shadow-md ring-1 ring-black/30">
               <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
 
               <div className="flex items-center gap-2 mb-4">
@@ -118,7 +141,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <span className="text-gray-400">({product.reviews} reviews)</span>
               </div>
 
-              <div className="text-3xl font-bold text-purple-400 mb-4">${product.price}</div>
+              <div className="text-3xl font-bold text-[var(--primary-purple)] mb-4">${product.price}</div>
 
               <p className="text-gray-300 mb-6">
                 Stay warm and stylish with this high-quality hoodie featuring your favorite anime character. Soft cotton
@@ -126,36 +149,97 @@ export default function ProductPage({ params }: ProductPageProps) {
               </p>
 
               <div className="flex gap-4 mb-8">
-                <button className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                <a href={`/payment?productId=${product.id}`} className="flex-1 bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md text-center">
                   Buy now
-                </button>
-                <button className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                </a>
+                <button className="flex-1 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white font-semibold py-3 px-6 rounded-lg transition-colors border border-neutral-800">
                   Add To Cart
                 </button>
               </div>
             </div>
 
-            <div className="border border-blue-500 rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-4 text-blue-400">Review</h3>
-              <div className="space-y-4">
-                {sampleReviews.map((review) => (
+            <div className="bg-surface rounded-lg p-4">
+              <h3 className="text-lg font-semibold mb-4 text-[var(--primary-purple)]">Reviews</h3>
+
+              {/* Reviews list - show ~2 items, make rest scrollable */}
+              <div className="space-y-4 mb-4 max-h-44 overflow-y-auto pr-2 modern-scrollbar">
+                {reviews.map((review) => (
                   <div key={review.id} className="flex gap-3">
-                    <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-sm font-bold">
-                      U
+                    <div className="w-10 h-10 bg-[var(--primary-purple)]/20 rounded-full flex items-center justify-center text-sm font-bold text-[var(--primary-purple)]">
+                      {review.user ? review.user[0].toUpperCase() : 'U'}
                     </div>
                     <div className="flex-1">
-                      <div className="font-semibold text-sm">{review.user}</div>
+                      <div className="flex items-center gap-2">
+                        <div className="font-semibold text-sm">{review.user}</div>
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star key={s} className={`w-4 h-4 ${s <= review.rating ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-600 text-gray-600'}`} />
+                          ))}
+                        </div>
+                      </div>
                       <p className="text-gray-300 text-sm mt-1">{review.comment}</p>
                     </div>
                   </div>
                 ))}
               </div>
+
+              {/* Add a review form (now below the reviews) */}
+              <form onSubmit={handleSubmitReview} className="space-y-3">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Your name (optional)"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="flex-1 bg-[#0a0a0a] border border-neutral-700 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/30"
+                  />
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => setRatingValue(n)}
+                        className={`p-1 rounded ${n <= ratingValue ? 'text-yellow-400' : 'text-gray-600'}`}
+                        aria-label={`${n} stars`}
+                      >
+                        <Star className="w-4 h-4" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <textarea
+                    placeholder="Write your review"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    className="w-full bg-[#0a0a0a] border border-neutral-700 px-3 py-2 rounded min-h-[80px] focus:outline-none focus:ring-2 focus:ring-[var(--primary-purple)]/30"
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <button type="submit" className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white px-4 py-2 rounded shadow-sm">
+                    Submit Review
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setName("");
+                      setRatingValue(5);
+                      setComment("");
+                    }}
+                    className="bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white px-4 py-2 rounded"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
 
-      <Footer />
+  {/* Footer is rendered in the RootLayout */}
     </div>
   )
 }

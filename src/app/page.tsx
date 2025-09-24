@@ -5,7 +5,6 @@ import Link from "next/link"
 import Image from "next/image"
 import Navbar from "@/components/Navbar"
 import ProductList from "@/components/CardList"
-import { Footer } from "@/components/Footer"
 import { sampleProducts } from "@/lib/data"
 
 export default function Home() {
@@ -129,7 +128,7 @@ export default function Home() {
         />
       </main>
 
-      <Footer />
+  {/* Footer is rendered in the RootLayout */}
     </div>
   )
 }

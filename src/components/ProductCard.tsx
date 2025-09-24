@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { sampleProducts } from "@/lib/data";
 
 interface ProductCardProps {
   id: number | string;
@@ -26,8 +27,8 @@ export default function ProductCard({
   imageUrl,
   image,
   price = 0,
-  rating = 0,
-  reviews = 0,
+  rating,
+  reviews,
   category,
   className = "",
   onAddToCart,
@@ -35,6 +36,11 @@ export default function ProductCard({
   const label = title ?? name ?? "Product";
   const src = imageUrl ?? image ?? "/placeholder.png";
   const formattedPrice = typeof price === "number" ? price.toFixed(2) : "0.00";
+
+  // Attempt to resolve rating/reviews from the sampleProducts data when not provided.
+  const productFromData = sampleProducts.find((p) => String(p.id) === String(id));
+  const effectiveRating = typeof rating === "number" && !isNaN(rating) ? rating : productFromData?.rating ?? 0;
+  const effectiveReviews = typeof reviews === "number" && !isNaN(reviews) ? reviews : productFromData?.reviews ?? 0;
 
   // Use layout animations + a hover state to make the size/content reveal seamless.
   const [isHovered, setIsHovered] = useState(false);
@@ -53,7 +59,7 @@ export default function ProductCard({
   return (
     <Link href={`/product/${id}`} aria-label={`View product ${label}`}>
       <motion.article
-        className={`w-full bg-[#1C1C1C] rounded-lg overflow-hidden flex flex-col ${className} cursor-pointer`}
+  className={`w-full bg-surface rounded-lg overflow-hidden flex flex-col ${className} cursor-pointer`}
         variants={containerVariants}
         initial="offscreen"
         whileInView="onscreen"
@@ -112,11 +118,11 @@ export default function ProductCard({
               <div className="flex items-center gap-2 text-sm text-gray-400">
                 <div className="flex items-center gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className={i < Math.round(rating) ? "text-yellow-400" : "text-gray-700"}>★</span>
+                    <span key={i} className={i < Math.round(effectiveRating) ? "text-yellow-400" : "text-gray-700"}>★</span>
                   ))}
                 </div>
-                <span className="text-gray-400">{rating ? rating.toFixed(1) : "0.0"}</span>
-                {reviews ? <span className="text-gray-500 text-xs">• {reviews}</span> : null}
+                <span className="text-gray-400">{effectiveRating ? effectiveRating.toFixed(1) : "0.0"}</span>
+                {effectiveReviews ? <span className="text-gray-500 text-xs">• {effectiveReviews}</span> : null}
               </div>
             </div>
 
