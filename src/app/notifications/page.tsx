@@ -108,7 +108,7 @@ export default function NotificationsPage() {
   }
 
   return (
-    <div className="bg-[#0F0F0F] min-h-screen text-white">
+    <div className="bg-[var(--background)] min-h-screen text-white">
       <Navbar />
 
       <div className="pt-20 px-4 lg:px-8 max-w-4xl mx-auto">

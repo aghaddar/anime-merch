@@ -15,36 +15,18 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark theme defaults for the entire site (force dark mode) */
+  --background: #0a0a0a;
+  --foreground: #ededed;
   --primary-purple: #ab03e3;
   --primary-purple-dark: #9002c7;
-  --facebook-blue: #1877f2; /* kept if you want brand blue later */
-  --surface: #1a1a1a; /* elevated panels/cards on dark theme */
-}
+  --facebook-blue: #1877f2;
+  --surface: #1a1a1a;
 
-@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* Force dark variables for narrow viewports (phones) so mobile shows dark background
-   even when the device is set to light mode. If you prefer to respect the user's
-   system preference, remove this rule and rely on prefers-color-scheme above. */
-@media (max-width: 640px) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

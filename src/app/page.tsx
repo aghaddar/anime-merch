@@ -38,7 +38,7 @@ export default function Home() {
       {/* ====== NAVBAR ====== */}
       <motion.div
         style={{ opacity: navbarOpacity, y: navbarY }}
-        className="fixed top-0 left-0 w-full z-40 bg-[#0F0F0F]/80 backdrop-blur-md"
+        className="fixed top-0 left-0 w-full z-40 bg-[var(--background)]/80 backdrop-blur-md"
       >
         <Navbar />
       </motion.div>
