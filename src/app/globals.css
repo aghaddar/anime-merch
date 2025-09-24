@@ -44,6 +44,16 @@ body {
   );
 }
 
+/* Ensure the page width always equals the viewport width and avoid horizontal scroll
+   caused by elements using vw/screen widths or transform/layout differences. */
+html,
+body,
+#__next {
+  width: 100vw;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
+
 /* utility for consistent elevated surfaces */
 .bg-surface {
   background: var(--surface);
