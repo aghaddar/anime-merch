@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -11,6 +11,7 @@ import CartIcon from "./CartIcon";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   // Ref to store timeout ID for closing notification dropdown
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -29,6 +30,13 @@ function Navbar() {
       setIsNotificationOpen(false);
     }, 200);
   };
+
+  useEffect(() => {
+    if (isMenuOpen && mobileMenuRef.current) {
+      const firstLink = mobileMenuRef.current.querySelector<HTMLAnchorElement>("a");
+      firstLink?.focus();
+    }
+  }, [isMenuOpen]);
 
   return (
   <nav className="navbar fixed top-0 left-0 w-full h-[65px] z-50 bg-[var(--background)] text-white shadow-lg">
@@ -70,7 +78,9 @@ function Navbar() {
             {/* Notification Dropdown */}
             {isNotificationOpen && (
               <div
-                className="absolute right-0 mt-2 w-80 bg-surface border border-neutral-700 rounded-lg shadow-xl z-50"
+                role="menu"
+                aria-label="Notifications"
+                className="absolute mt-2 right-0 sm:right-0 sm:w-80 w-[calc(100%-1rem)] left-2 bg-surface border border-neutral-700 rounded-lg shadow-xl z-50"
                 onMouseEnter={handleNotificationEnter}
                 onMouseLeave={handleNotificationLeave}
               >
@@ -82,7 +92,7 @@ function Navbar() {
                     </button>
                   </div>
 
-                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                  <div className="space-y-3 max-h-72 sm:max-h-96 overflow-y-auto modern-scrollbar">
                     <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
                       <p className="text-sm">Your order #12345 has been shipped!</p>
                       <p className="text-xs text-gray-400 mt-1">10 minutes ago</p>
@@ -137,8 +147,41 @@ function Navbar() {
           </button>
         </div>
       </div>
-    </nav>
-  );
+            {/* Mobile Menu Panel (shows on small screens when hamburger is toggled) */}
+            <div
+              ref={mobileMenuRef}
+              className={`lg:hidden transition-all duration-200 ease-in-out ${isMenuOpen ? "max-h-screen" : "max-h-0 overflow-hidden"}`}
+              aria-hidden={!isMenuOpen}
+            >
+              <div
+                role="dialog"
+                aria-label="Mobile menu"
+                className={`bg-surface border-t border-neutral-700 p-4 ${isMenuOpen ? "block" : "hidden"}`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-lg font-semibold">Menu</div>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    aria-label="Close menu"
+                    className="p-2 rounded hover:bg-surface/90"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  <Link href="/" onClick={() => setIsMenuOpen(false)} className="block text-white py-2 px-2 rounded hover:bg-surface/90">Home</Link>
+                  <Link href="/women" onClick={() => setIsMenuOpen(false)} className="block text-white py-2 px-2 rounded hover:bg-surface/90">Women</Link>
+                  <Link href="/men" onClick={() => setIsMenuOpen(false)} className="block text-white py-2 px-2 rounded hover:bg-surface/90">Men</Link>
+                  <Link href="/decoration" onClick={() => setIsMenuOpen(false)} className="block text-white py-2 px-2 rounded hover:bg-surface/90">Decoration</Link>
+                  <Link href="/notifications" onClick={() => setIsMenuOpen(false)} className="block text-white py-2 px-2 rounded hover:bg-surface/90">Notifications</Link>
+                  <Link href="/cart" onClick={() => setIsMenuOpen(false)} className="block text-white py-2 px-2 rounded hover:bg-surface/90">Cart</Link>
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)} className="block bg-white text-black rounded-[10px] text-[18px] font-bold py-2 px-3 text-center">Login</Link>
+                </div>
+              </div>
+            </div>
+          </nav>
+      );
 }
 
 export default Navbar;
