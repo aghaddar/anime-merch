@@ -62,9 +62,9 @@ function Navbar() {
             <SearchBar />
           </div>
 
-          {/* Notification with Dropdown */}
+          {/* Notification with Dropdown (hidden on small screens) */}
           <div
-            className="relative"
+            className="relative hidden sm:block"
             onMouseEnter={handleNotificationEnter}
             onMouseLeave={handleNotificationLeave}
           >
@@ -80,42 +80,42 @@ function Navbar() {
               <div
                 role="menu"
                 aria-label="Notifications"
-                className="absolute mt-2 right-0 sm:right-0 sm:w-80 w-[calc(100%-1rem)] left-2 bg-surface border border-neutral-700 rounded-lg shadow-xl z-50"
                 onMouseEnter={handleNotificationEnter}
                 onMouseLeave={handleNotificationLeave}
+                className="z-50"
               >
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold">Notifications</h3>
-                    <button className="text-sm text-blue-400 hover:text-blue-300">
-                      Mark all as read
-                    </button>
-                  </div>
+                {/* Panel: fixed and full-width on small screens, absolute & compact on md+ */}
+                <div className="fixed top-[65px] left-2 right-2 md:absolute md:top-auto md:left-auto md:right-0 md:w-80">
+                  <div className="bg-surface border border-neutral-700 rounded-lg shadow-xl overflow-hidden">
+                    <div className="p-4">
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-lg font-semibold">Notifications</h3>
+                        <button className="text-sm text-blue-400 hover:text-blue-300">Mark all as read</button>
+                      </div>
 
-                  <div className="space-y-3 max-h-72 sm:max-h-96 overflow-y-auto modern-scrollbar">
-                    <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
-                      <p className="text-sm">Your order #12345 has been shipped!</p>
-                      <p className="text-xs text-gray-400 mt-1">10 minutes ago</p>
+                      <div className="space-y-3 overflow-y-auto modern-scrollbar max-h-[calc(100vh-160px)] md:max-h-96 pr-4">
+                        <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
+                          <p className="text-sm">Your order #12345 has been shipped!</p>
+                          <p className="text-xs text-gray-400 mt-1">10 minutes ago</p>
+                        </div>
+
+                        <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
+                          <p className="text-sm">Special discount on all manga this weekend!</p>
+                          <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
+                        </div>
+
+                        <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
+                          <p className="text-sm">New Naruto apparel collection is now available</p>
+                          <p className="text-xs text-gray-400 mt-1">1 day ago</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-gray-700">
+                        <Link href="/notifications" className="block text-center text-blue-400 hover:text-blue-300 text-sm">
+                          View all notifications
+                        </Link>
+                      </div>
                     </div>
-
-                    <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
-                      <p className="text-sm">Special discount on all manga this weekend!</p>
-                      <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
-                    </div>
-
-                    <div className="p-3 bg-surface/90 rounded-lg hover:bg-surface cursor-pointer">
-                      <p className="text-sm">New Naruto apparel collection is now available</p>
-                      <p className="text-xs text-gray-400 mt-1">1 day ago</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-gray-700">
-                    <Link
-                      href="/notifications"
-                      className="block text-center text-blue-400 hover:text-blue-300 text-sm"
-                    >
-                      View all notifications
-                    </Link>
                   </div>
                 </div>
               </div>

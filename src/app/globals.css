@@ -66,18 +66,22 @@ body,
   scrollbar-color: var(--primary-purple) transparent;
 }
 .modern-scrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 .modern-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 .modern-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--primary-purple);
+  background-color: rgba(171, 3, 227, 0.95);
   border-radius: 9999px;
-  border: 2px solid transparent; /* creates padding around thumb */
+  border: 2px solid var(--background); /* creates padding around thumb so it appears thinner */
   background-clip: padding-box;
   opacity: 0.95;
+}
+
+.modern-scrollbar {
+  -webkit-overflow-scrolling: touch;
 }
 .modern-scrollbar::-webkit-scrollbar-thumb:hover {
   opacity: 1;
