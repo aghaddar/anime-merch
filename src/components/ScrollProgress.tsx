@@ -10,7 +10,7 @@ export default function ScrollProgress() {
   return (
     <motion.div
       aria-hidden
-      className="fixed top-0 left-0 right-0 h-1 bg-[#ab03e3] origin-left z-50 pointer-events-none"
+      className="fixed top-0 left-0 right-0 h-1 bg-[var(--primary-purple)] origin-left z-50 pointer-events-none"
       style={{ scaleX }}
     />
   );

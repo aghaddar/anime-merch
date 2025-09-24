@@ -4,6 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import SearchBar from "./SearchBar";
+import BellIcon from "./BellIcon";
+import CartIcon from "./CartIcon";
+
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,16 +61,10 @@ function Navbar() {
             onMouseLeave={handleNotificationLeave}
           >
             {/* Notification Icon */}
-            <div className="w-8 h-8 relative cursor-pointer">
-              <Image
-                src="/darkmode-notification.png"
-                alt="Notifications"
-                width={40}
-                height={40}
-              />
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
+            <div className="w-8 h-8 relative flex items-center justify-center group">
+              <Link href="/notifications" className="inline-flex items-center justify-center w-10 h-10">
+                <BellIcon />
+              </Link>
             </div>
 
             {/* Notification Dropdown */}
@@ -116,15 +113,9 @@ function Navbar() {
           </div>
 
           {/* Cart */}
-          <div className="w-8 h-8 relative">
-            <Link href="/cart">
-              <Image
-                src="/darkmode-cart.png"
-                alt="Cart"
-                width={40}
-                height={40}
-                className="hover:opacity-80 transition-opacity"
-              />
+          <div className="w-8 h-8 relative flex items-center justify-center group">
+            <Link href="/cart" className="inline-flex items-center justify-center w-10 h-10">
+              <CartIcon />
             </Link>
           </div>
 

@@ -1,7 +1,23 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 function LoginPage() {
+  const router = useRouter();
+
   return (
     <div className="main-page min-h-screen flex items-center justify-center bg-[#0F0F0F]">
       <div className="login-container w-full max-w-md p-6 bg-[#1A1A1A] rounded-xl shadow-lg">
+
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="text-sm text-gray-300 hover:text-white flex items-center gap-2"
+          >
+            ← Back
+          </button>
+        </div>
         
         {/* Header */}
         <header className="text-center mb-6">
@@ -75,10 +91,10 @@ function LoginPage() {
 
         {/* Social Login */}
         <div className="flex space-x-4">
-          <button className="flex-1 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition">
+          <button className="flex-1 py-2 border rounded-lg text-white hover:text-black hover:bg-gray-100 transition">
             Google
           </button>
-          <button className="flex-1 py-2 border rounded-lg bg-blue-500 text-gray-700 hover:bg-gray-100 transition">
+          <button className="flex-1 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
             Facebook
           </button>
         </div>

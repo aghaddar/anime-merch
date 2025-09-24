@@ -5,6 +5,7 @@ import CartCard from "@/components/CartCard"
 import { Footer } from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { sampleProducts, shippingOptions } from "@/lib/data"
+import { AnimatedNumber } from "@/components/AnimatedNumber"
 
 export default function CartPage() {
   // Initialize cart items using sampleProducts and add a default quantity
@@ -66,9 +67,11 @@ export default function CartPage() {
 
               {/* Subtotal */}
               <div className="flex justify-between items-center mb-6 text-sm md:text-base">
-                <span className="text-gray-400">Subtotal</span>
-                <span className="text-white font-medium">${subtotal.toFixed(2)}</span>
-              </div>
+  <span className="text-gray-400">Subtotal</span>
+  <span className="text-white font-medium">
+    $<AnimatedNumber value={subtotal} />
+  </span>
+</div>
 
               {/* Shipping Options */}
               <div className="mb-6">
@@ -100,12 +103,14 @@ export default function CartPage() {
               {/* Total */}
               <div className="flex justify-between items-center mb-8 pt-4 border-t border-gray-600 text-sm md:text-base">
                 <span className="text-gray-400">Total</span>
-                <span className="text-white text-lg font-semibold">${total.toFixed(2)}</span>
+                <span className="text-white text-lg font-semibold">
+                  $<AnimatedNumber value={total} />
+                </span>
               </div>
 
               {/* Buttons */}
               <div className="space-y-3">
-                <button className="w-full bg-[#ab03e3] hover:bg-[#9002c7] text-white py-3 px-6 rounded-lg font-medium transition-colors">
+                <button className="w-full bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white py-3 px-6 rounded-lg font-medium transition-colors">
                   Buy Now
                 </button>
                 <button className="w-full bg-[#292929] hover:bg-[#333333] text-white py-3 px-6 rounded-lg font-medium transition-colors">

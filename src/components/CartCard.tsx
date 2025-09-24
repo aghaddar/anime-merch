@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Star, Plus, Minus } from "lucide-react"
 import Image from "next/image"
+import { AnimatedNumber } from "@/components/AnimatedNumber" // <-- make sure this exists
 
 interface CartCardProps {
   productName: string
@@ -22,6 +23,7 @@ export default function CartCard({
   className,
 }: CartCardProps) {
   const [quantity, setQuantity] = useState(initialQuantity)
+  const [favorited, setFavorited] = useState(false)
 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity < 1) return
@@ -30,7 +32,9 @@ export default function CartCard({
   }
 
   return (
-    <div className={`w-full bg-[#1C1C1C] rounded-lg shadow-lg overflow-hidden flex flex-col ${className}`}>
+    <div
+      className={`w-full bg-[#1C1C1C] rounded-lg shadow-lg overflow-hidden flex flex-col ${className}`}
+    >
       {/* Product Image */}
       <div className="relative w-full h-48 bg-gray-800">
         <Image
@@ -39,9 +43,18 @@ export default function CartCard({
           fill
           className="object-cover rounded-t-lg"
         />
-        {/* Favorite Button */}
-        <button className="absolute top-2 right-2 p-2 bg-black/40 rounded-full hover:bg-black/60 transition">
-          <Star className="w-5 h-5 text-gray-300 hover:text-yellow-400" />
+        {/* Favorite Button (toggle) */}
+        <button
+          type="button"
+          aria-pressed={favorited}
+          title={favorited ? "Remove favorite" : "Add to favorites"}
+          onClick={(e) => {
+            e.stopPropagation()
+            setFavorited((v) => !v)
+          }}
+          className={`absolute top-2 right-2 p-2 rounded-full transition focus:ring-2 focus:ring-[var(--primary-purple)]/30 ${favorited ? 'bg-black/70' : 'bg-black/40 hover:bg-black/60'}`}
+        >
+          <Star className={`w-5 h-5 ${favorited ? 'text-yellow-400' : 'text-gray-300'} transition-colors`} />
         </button>
       </div>
 
@@ -58,7 +71,9 @@ export default function CartCard({
             >
               <Minus className="w-4 h-4 text-white" />
             </button>
-            <span className="px-3 text-white">{quantity}</span>
+            <span className="px-3 text-white font-medium">
+              <AnimatedNumber value={quantity} decimals={0} />
+            </span>
             <button
               className="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600 transition"
               onClick={() => handleQuantityChange(quantity + 1)}
@@ -67,23 +82,27 @@ export default function CartCard({
             </button>
           </div>
 
-          <span className="text-gray-300 text-sm">x ${pricePerItem.toFixed(2)}</span>
+          <span className="text-gray-300 text-sm">
+            x $<AnimatedNumber value={pricePerItem} />
+          </span>
         </div>
 
         {/* Price and Total */}
         <div className="flex justify-between items-center">
           <p className="text-gray-400 text-sm">Price</p>
-          <p className="text-white font-medium">${pricePerItem.toFixed(2)}</p>
+          <p className="text-white font-medium">
+            $<AnimatedNumber value={pricePerItem} />
+          </p>
         </div>
         <div className="flex justify-between items-center">
           <p className="text-gray-400 text-sm">Total</p>
           <p className="text-white font-semibold">
-            ${(quantity * pricePerItem).toFixed(2)}
+            $<AnimatedNumber value={quantity * pricePerItem} />
           </p>
         </div>
 
         {/* Add to Cart Button */}
-        <button className="w-full bg-[#ab03e3] hover:bg-[#9002c7] text-white py-2 rounded-lg transition">
+        <button className="w-full bg-[var(--primary-purple)] hover:bg-[var(--primary-purple-dark)] text-white py-2 rounded-lg transition">
           Add To Cart
         </button>
       </div>

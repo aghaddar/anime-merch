@@ -1,7 +1,23 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 function LoginPage() {
+  const router = useRouter();
+
   return (
     <div className="main-page min-h-screen flex items-center justify-center bg-[#0F0F0F]">
       <div className="login-container w-full max-w-md p-6 bg-[#1A1A1A] rounded-xl shadow-lg">
+
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="text-sm text-gray-300 hover:text-white flex items-center gap-2"
+          >
+            ← Back
+          </button>
+        </div>
         
         {/* Header */}
         <header className="text-center mb-6">
@@ -33,7 +49,7 @@ function LoginPage() {
           {/* Log In Button */}
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition duration-200 mt-10"
+            className="btn-primary w-full rounded-[15px]"
           >
             Request Reset Link
           </button>

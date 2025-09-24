@@ -4,6 +4,7 @@ import type React from "react"
 
 import { Search, X } from "lucide-react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 interface SearchBarProps {
   placeholder?: string
@@ -14,15 +15,24 @@ interface SearchBarProps {
 export function SearchBar({ placeholder = "Search...", onSearch, className }: SearchBarProps) {
   const [query, setQuery] = useState("")
   const [isFocused, setIsFocused] = useState(false)
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onSearch?.(query)
+    // navigate to search page with query
+    const q = query.trim()
+    if (q) {
+      router.push(`/search?query=${encodeURIComponent(q)}`)
+    } else {
+      router.push(`/search`)
+    }
   }
 
   const handleClear = () => {
     setQuery("")
     onSearch?.("")
+    router.push(`/search`)
   }
 
   return (
