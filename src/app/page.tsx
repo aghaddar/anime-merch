@@ -23,13 +23,13 @@ export default function Home() {
   const imagesY = useTransform(scrollY, [250, 400], [50, 0])
 
   return (
-    <div className="bg-[#0F0F0F] min-h-screen relative w-full">
+  <div className="bg-[var(--background)] min-h-screen relative w-full">
       {/* ====== INTRO LOGO ====== */}
       <motion.div
         style={{ opacity: logoOpacity, scale: logoScale }}
         className="h-screen flex items-center justify-center text-white fixed top-0 left-0 w-full z-50 pointer-events-none"
       >
-        <h1 className="text-6xl font-[ungee] md:text-7xl font-bold tracking-wide">ANIMEPLUS</h1>
+  <h1 className="text-6xl md:text-7xl font-bold tracking-wide font-bungee">ANIMEPLUS</h1>
       </motion.div>
 
       {/* Push content below full-screen intro */}

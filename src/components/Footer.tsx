@@ -1,9 +1,9 @@
 export function Footer() {
   return (
     <footer className="bg-gray-950 text-white py-8 px-6 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
         {/* Contact us section */}
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <h3 className="text-lg font-semibold mb-4">Contact us</h3>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
